@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+    <link rel="stylesheet" href="./app.css">
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+</head>
+
+<body>
+    <div id="app">
+        <el-container>
+            <el-aside>
+                <el-menu :default-active="activeMenuItem" @select="handleSelect">
+                    <el-menu-item index="1">
+                        <i class="el-icon-menu"></i>
+                        <span>Today</span>
+                    </el-menu-item>
+                    <el-menu-item index="2">
+                        <i class="el-icon-menu"></i>
+                        <span>Past</span>
+                    </el-menu-item>
+                    <el-menu-item index="3">
+                        <i class="el-icon-menu"></i>
+                        <span>Stats</span>
+                    </el-menu-item>
+                </el-menu>
+            </el-aside>
+
+            <el-container>
+                
+                <el-main >
+                        <div class='todaysNotes' v-if="activeMenuItem == 1">
+                    <el-form ref="form" size="mini">
+                        <el-form-item label="Title">
+                            <el-input></el-input>
+                        </el-form-item>
+                        <el-form-item label="Content">
+                            <el-input type="textarea"></el-input>
+                        </el-form-item>
+                        <el-button type="primary">Submit</el-button>
+                    </el-form>
+                    <section>
+                        <el-table :data="todaysNotes">
+                                <el-table-column
+                                label="Date"
+                                prop="date">
+                              </el-table-column>
+                              <el-table-column
+                                label="Title"
+                                prop="title">
+                              </el-table-column>
+                              <el-table-column
+                                label="Content"
+                                prop="content">
+                              </el-table-column>
+                        </el-table>
+                    </section>
+                </div>
+
+                <div class='pastNotes' v-if="activeMenuItem == 2">
+                    <section>
+                        <el-table :data="pastNotes">
+                                <el-table-column
+                                label="Date"
+                                prop="date">
+                              </el-table-column>
+                              <el-table-column
+                                label="Title"
+                                prop="title">
+                              </el-table-column>
+                              <el-table-column
+                                label="Content"
+                                prop="content">
+                              </el-table-column>
+                        </el-table>
+                    </section>
+                </div>
+
+               <div class='stats' v-if="activeMenuItem == 3">
+                    <section>
+                            <p> You've written {{ todaysNotes.length + pastNotes.length }} notes</p>
+                        <p> You've written {{ todaysNotes.length }} notes today</p>
+                    </section>
+                </div>
+                </el-main>
+            
+            </el-container>
+        </el-container>
+    </div>
+</body>
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: function () {
+
+            
+            const activeMenuItem = '1';
+            const todaysNotes = [
+                {
+                    date: '2016-05-03',
+                    title:'title note 1',
+                    content: 'content note 1'
+                },
+                {
+                    date: '2017-05-03',
+                    title:'title note 2',
+                    content: 'content note 2'
+                },
+                {
+                    date: '2018-05-03',
+                    title:'title note 3',
+                    content: 'content note 3'
+                }
+        ];
+        const pastNotes = [
+                {
+                    date: '2016-05-03',
+                    title:'title note 1',
+                    content: 'content note 1'
+                },
+                {
+                    date: '2017-05-03',
+                    title:'title note 2',
+                    content: 'content note 2'
+                },
+                {
+                    date: '2018-05-03',
+                    title:'title note 3',
+                    content: 'content note 3'
+                }
+        ];
+        
+            return { visible: false,  todaysNotes, pastNotes, activeMenuItem}
+        },
+        methods: {
+            handleSelect(key, keyPath) {
+                this.activeMenuItem = key;
+            }
+        }
+    })
+</script>
+
+</html>
