@@ -6,13 +6,12 @@ const bodyParser = require('body-parser');
 
 const routes = require('./routes');
 
-
 // middlewares
-app.use(Express.json());
-app.use(cors());
-app.use(bodyParser.json()); // support json encoded bodies
 
+// support json encoded bodies
+app.use(bodyParser.json()); 
 
+app.use(cors({origin: '*'}));
 app.use('/api',routes);
 
 

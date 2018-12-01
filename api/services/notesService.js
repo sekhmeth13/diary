@@ -46,9 +46,9 @@ function create(newNote) {
     })
 }
 
-// function delete(noteId) {
-// 	return Tank.deleteOne({ _id: noteId });
-// }
+function deleteNote(noteId) {
+	return notesModel.deleteOne({ _id: noteId });
+}
 
 function getStats(){
 	const today = new Date();
@@ -78,5 +78,6 @@ function getStats(){
 module.exports = {
     find,
     create,
+    deleteNote,
     getStats,
 }

@@ -12,6 +12,10 @@ module.exports = function(router){
         return notesService.create(req.body)
         .then(response => res.send(JSON.stringify(response)));
     });
+    router.delete('/notes/:id', (req, res) => {
+        return notesService.deleteNote(req.params.id)
+        .then(response => res.send(JSON.stringify(response)));
+    });
 
     router.get('/stats', (req, res) => {
         return notesService.getStats()

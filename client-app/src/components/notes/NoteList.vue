@@ -1,13 +1,13 @@
 <template>
 <section>
     <el-table :data="notes">
-      <!-- <el-table-column :width="50">
+      <el-table-column :width="50">
         <template slot-scope="scope">
-          <el-button type="danger" plain circle @click="delete(scope.row._id)">
+          <el-button type="danger" plain circle @click="deleteNote(scope.row)">
             <font-awesome-icon icon="trash-alt"></font-awesome-icon>
           </el-button>
         </template>
-      </el-table-column> -->
+      </el-table-column>
       <el-table-column class=''
       label="Date" prop="date" sortable :width="isTodayNotes ? 180 : 220">
         <template slot-scope="scope">
@@ -92,7 +92,24 @@ export default {
       return `${subString}...`;
     },
   },
-
+  methods: {
+    async deleteNote(row) {
+      const note = Object.assign({}, row);
+      try {
+        const response = await fetch(`http://localhost:3000/api/notes/${note._id}`,
+          {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+          });
+        const result = await response.json();
+        if (result.ok === 1) {
+          this.notes.splice(this.notes.indexOf(row), 1);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
 };
 
 
